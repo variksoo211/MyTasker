@@ -12,17 +12,23 @@ dependencies:
   provider: ^6.1.2
   sqflite: ^2.0.0
   path: ^1.8.0
+<<<<<<< HEAD
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
   build_runner: ^2.4.14
+=======
+>>>>>>> 56cc2617df886f99a5b098a880e3ce3649b1a942
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+<<<<<<< HEAD
   hive_generator: ^2.0.0
   build_runner: ^2.1.7
+=======
+>>>>>>> 56cc2617df886f99a5b098a880e3ce3649b1a942
   
 flutter:
   assets:
