@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
 import 'package:hive_flutter/hive_flutter.dart';
 import 'screens/home_screen.dart';
 import 'providers/task_provider.dart';
@@ -12,12 +11,6 @@ void main() async {
   Hive.registerAdapter(TaskAdapter()); // Register Hive adapter
   await Hive.openBox<Task>('tasks'); // Open a Hive box to store tasks
 
-=======
-import 'package:mytasker/screens/home_screen.dart';
-import 'package:mytasker/providers/task_provider.dart';
-
-void main() {
->>>>>>> 56cc2617df886f99a5b098a880e3ce3649b1a942
   runApp(MyTaskerApp());
 }
 
