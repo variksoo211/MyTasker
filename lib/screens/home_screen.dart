@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/task_provider.dart';
-<<<<<<< HEAD
 import '../services/weather_service.dart';
 import '../screens/add_edit_task_screen.dart';
 import '../widgets/task_card.dart';
@@ -15,23 +14,19 @@ class _HomeScreenState extends State<HomeScreen> {
   final WeatherService _weatherService = WeatherService();
   Map<String, dynamic>? _weatherData;
   bool _isLoadingWeather = false;
-  String _city = 'London'; // Default city
+  String _city = 'London';
 
   Future<void> _fetchWeather() async {
     setState(() {
       _isLoadingWeather = true;
     });
 
-    print('Fetching weather for: $_city'); // Debugging
-
     try {
       final data = await _weatherService.fetchWeather(_city);
-      print('Weather API Response: $data'); // Debugging
       setState(() {
         _weatherData = data;
       });
     } catch (error) {
-      print('Error fetching weather: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error fetching weather: ${error.toString()}')),
       );
@@ -42,12 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-=======
-import '../screens/add_edit_task_screen.dart';
-import '../widgets/task_card.dart';
+  @override
+  void initState() {
+    super.initState();
+    _fetchWeather();
+  }
 
-class HomeScreen extends StatelessWidget {
->>>>>>> 56cc2617df886f99a5b098a880e3ce3649b1a942
   @override
   Widget build(BuildContext context) {
     final taskProvider = Provider.of<TaskProvider>(context);
@@ -67,13 +62,12 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-<<<<<<< HEAD
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF4CAF50), Color(0xFF81C784)], // Green theme
+                colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -95,7 +89,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// **Portrait Layout (Mobile)**
   Widget _buildPortraitLayout(TaskProvider taskProvider) {
     return Column(
       children: [
@@ -104,7 +97,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// **Landscape Layout (Tablet/Desktop)**
   Widget _buildLandscapeLayout(TaskProvider taskProvider) {
     return Row(
       children: [
@@ -113,7 +105,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// **Task List - Adaptive UI**
   Widget _buildTaskList(TaskProvider taskProvider) {
     final isTablet = MediaQuery.of(context).size.width > 600;
 
@@ -131,7 +122,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// **Weather Widget - Fixed to Show Correct City & Smaller Size**
   Widget _buildWeatherWidget() {
     return Align(
       alignment: Alignment.bottomCenter,
@@ -140,12 +130,12 @@ class HomeScreen extends StatelessWidget {
         child: GestureDetector(
           onTap: _showCityInputModal,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.15, // Smaller size
+            width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.width * 0.15,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: const LinearGradient(
-                colors: [Colors.pink, Colors.orange], // Match + button colors
+                colors: [Colors.pink, Colors.orange],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -183,9 +173,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// **Fixed City Input Modal to Update `_city` Correctly**
   void _showCityInputModal() {
-    String newCity = _city; // Store the current city
+    String newCity = _city;
 
     showModalBottomSheet(
       context: context,
@@ -200,7 +189,7 @@ class HomeScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               onChanged: (value) {
-                newCity = value.trim(); // Store entered value
+                newCity = value.trim();
               },
             ),
             const SizedBox(height: 10),
@@ -213,10 +202,10 @@ class HomeScreen extends StatelessWidget {
                   return;
                 }
                 setState(() {
-                  _city = newCity; // Update _city with new input
+                  _city = newCity;
                 });
                 Navigator.of(context).pop();
-                _fetchWeather(); // Fetch new weather data
+                _fetchWeather();
               },
               child: Text('Get Weather'),
             ),
@@ -226,7 +215,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// **Floating Action Button (For Adding New Tasks)**
   Widget _buildFloatingButton() {
     return GestureDetector(
       onTap: () {
@@ -240,7 +228,7 @@ class HomeScreen extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: const LinearGradient(
-            colors: [Colors.pink, Colors.orange], // Same as weather widget
+            colors: [Colors.pink, Colors.orange],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -257,94 +245,6 @@ class HomeScreen extends StatelessWidget {
           child: Text(
             "➕",
             style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold),
-=======
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              if (taskProvider.tasks.isEmpty) ...[
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "🎉 No tasks yet!",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        "Tap the button below to add your first task.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ] else ...[
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: taskProvider.tasks.length,
-                    itemBuilder: (context, index) {
-                      return TaskCard(task: taskProvider.tasks[index]);
-                    },
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => AddEditTaskScreen(),
-            ),
-          );
-        },
-        child: Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: const LinearGradient(
-              colors: [Colors.pink, Colors.orange],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.pink.withOpacity(0.6),
-                blurRadius: 10,
-                spreadRadius: 2,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: const Center(
-            child: Text(
-              "➕",
-              style: TextStyle(
-                fontSize: 32,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
->>>>>>> 56cc2617df886f99a5b098a880e3ce3649b1a942
           ),
         ),
       ),
